@@ -1,27 +1,59 @@
 <template>
   <div>
     <SearchCountry v-model="text" />
-    <div>
-      <ul class="posts">
+
+    <div
+      class="ml-16 mr-24 bg-sky-600 border-none rounded-lg flex justify-around items-center place-self-center h-12 shadow-3xl"
+    >
+      <div class="flex place-self-center items-center justify-start flex-auto">
+        <div class="ml-6 w-12">
+          <p class="text-white">№</p>
+        </div>
+        <hr class="w-px h-12 bg-white" />
+        <div class="ml-12">
+          <p class="text-white font-roboto">Country</p>
+        </div>
+      </div>
+      <hr class="w-px h-12 bg-white mr-6" />
+      <div class="mr-24 w-40">
+        <p class="text-white align-text-center">Total Confirmed</p>
+      </div>
+    </div>
+
+    <div class="ml-16 mr-24">
+      <ul>
         <li
-          class="posts-list"
-          v-for="item in searchPost()"
+          v-for="(item, index) in searchPost()"
           :key="item.id"
           @click="getModalData(item)"
+          class="flex border-none rounded-lg justify-between items-center place-self-center h-12 shadow-3xl cursor-pointer"
         >
-          <div>
-            <h2>{{ item.Country }}</h2>
+          <div
+            class="flex place-self-center items-center justify-start flex-auto"
+          >
+            <div class="ml-6 w-12 font-bold">
+              {{ index + 1 }}
+            </div>
+            <hr class="w-px h-12 bg-light-gray mr-6" />
+            <div class="ml-12">
+              <h2 class="font-serif font-bold">{{ item.Country }}</h2>
+            </div>
+          </div>
+          <hr class="w-px h-12 bg-light-gray mr-6" />
+          <div class="mr-24 w-40">
+            <p class="align-text-center font-bold">{{localeNumber(item.TotalConfirmed) }}</p>
           </div>
         </li>
       </ul>
     </div>
+
     <DialogWindow :modalData="modalData" :show="show" @hideModal="hideModal" />
   </div>
 </template>
 
 <script>
-import SearchCountry from "./SearchCountry.vue";
 import axios from "axios";
+import SearchCountry from "./SearchCountry.vue";
 import DialogWindow from "./DialogWindow.vue";
 
 export default {
@@ -60,7 +92,11 @@ export default {
     hideModal() {
       this.show = false;
       this.modalData = [];
+      this.text = "";
     },
+    localeNumber(item) {
+      return item.toLocaleString()
+    }
   },
   mounted() {
     this.getCountries();
@@ -68,30 +104,4 @@ export default {
 };
 </script>
 
-<style>
-body {
-  background: url(/src/icons/world.svg) fixed no-repeat;
-  background-position-y: 40px;
-  background-position-x: -120px;
-  background-size: 115%;
-}
-
-.posts {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 0;
-  margin: 0 auto;
-}
-
-.posts-list {
-  border: 1px solid teal;
-  border-radius: 12px;
-  width: 25%;
-  text-align: center;
-  list-style-type: none;
-  margin: 30px;
-  align-items: center;
-  padding: 0;
-}
-</style>
+<style></style>

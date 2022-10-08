@@ -1,14 +1,43 @@
 <template>
-  <div class="dialog" v-if="show" @click="hideModal">
+  <div class="dialog" v-if="show" >
     <div
       @click.stop
       class="dialog-content"
       v-for="(data, id) in modalData"
       :key="id"
     >
-      <p>CountryCode: {{ data.CountryCode }}</p>
-      <p>TotalConfirmed: {{ data.TotalConfirmed }}</p>
-      <p>Total Deaths: {{ data.TotalDeaths }}</p>
+    <div>
+      <p class="font-sans not-italic font-bold text-2xl text-black">{{data.Country}}</p>
+    </div>
+      <div>
+      <div class="flex justify-between mt-5 items-center">
+        <div class="flex justify-start">
+        <img src="@/icons/VectorConfirmed.png" alt="confirmed logo" class="h-4 w-4 mr-4">
+        <p class="font-sans not-italic font-normal text-sm text-light-gray mr-24">Total Confirmed </p> 
+      </div>
+        <p class="font-sans not-italic font-normal text-sm text-light-gray">{{ data.TotalConfirmed }}</p>
+      </div>
+
+      <div class="flex justify-between mt-5 items-center">
+        <div class="flex justify-start">
+        <img src="@/icons/VectorDeaths.png" alt="confirmed logo" class="h-4 w-4 mr-4">
+        <p class="font-sans not-italic font-normal text-sm text-light-gray mr-24">Total Deaths</p>
+      </div>
+         <p class="font-sans not-italic font-normal text-sm text-light-gray">{{ data.TotalDeaths }}</p>
+      </div>
+
+      <div class="flex justify-between mt-5 items-center">
+        <div class="flex justify-start">
+        <img src="@/icons/VectorRecovered.png" alt="confirmed logo" class="h-4 w-4 mr-4">
+        <p class="font-sans not-italic font-normal text-sm text-light-gray mr-24">New Confirmed </p>
+      </div>
+        <p class="font-sans not-italic font-normal text-sm text-light-gray">{{ data.NewConfirmed }}</p>
+      </div>
+
+    </div>
+      <button @click="hideModal" class="w-24 h-8 bg-sky-600 border-none rounded-lg shadow-4xl mt-6"> 
+        <p class="text-white align-text-center font-sans not-italic text-xs ">OK</p> 
+      </button>
     </div>
   </div>
 </template>
@@ -37,7 +66,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .dialog {
   top: 0;
   right: 0;
